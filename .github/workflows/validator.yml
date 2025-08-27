@@ -1,0 +1,20 @@
+name: Validate README
+
+on: [pull_request]
+
+jobs:
+  check-for-keyword:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Check for the word 'Approved' in README
+        run: |
+          if grep -q "Approved" README.md; then
+            echo "Keyword found. Test passes!"
+            exit 0
+          else
+            echo "Keyword 'Approved' not found in README.md. Test fails!"
+            exit 1
+          fi
